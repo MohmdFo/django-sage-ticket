@@ -17,12 +17,6 @@ class Issue(TimeStampMixin):
         help_text=_("The subject of the issue."),
         db_comment="The subject of the issue.",
     )
-    name = models.CharField(
-        max_length=255,
-        verbose_name=_("Name"),
-        help_text=_("The name of the issue reporter."),
-        db_comment="The name of the issue reporter.",
-    )
     message = models.TextField(
         verbose_name=_("Message"),
         help_text=_("The detailed message of the issue."),
@@ -73,11 +67,6 @@ class Issue(TimeStampMixin):
         verbose_name = _("Issue")
         verbose_name_plural = _("Issues")
         db_table = "sage_issue"
-        constraints = [
-            models.CheckConstraint(
-                name="issue_state", check=models.Q(state__in=TicketStateEnum.values)
-            )
-        ]
 
     def clean(self):
         """Validate the issue's state transitions and ensure the state value is

@@ -28,28 +28,34 @@ class DepartmentInline(admin.TabularInline):
 @admin.register(Issue)
 class IssueAdmin(admin.ModelAdmin):
     inlines = [AttachmentInline, CommentInline]
-    list_display = ("subject", "state", "created_at")
-    list_filter = ("state", "created_at")
-    search_fields = ("subject", "message")
+    list_display = ("subject", "state", "department", "raised_by", "is_unread", "is_archive", "created_at")
+    list_filter = ("state", "is_unread", "is_archive", "created_at", "department")
+    search_fields = ("subject", "message", "raised_by__username", "department__title")
     ordering = ("-created_at",)
     readonly_fields = ("created_at", "modified_at")
+    autocomplete_fields = ("raised_by", "department")
+    save_on_top = True  # UX enhancement for admin users
+
     fieldsets = (
         (
-            None,
+            _("Issue Details"),
             {
-                "fields": ("subject", "message", "state", "department", "raised_by"),
-                "description": _(
-                    "Fields related to the issue, including the subject, description, and current state."
-                ),
+                "fields": ("subject", "message", "state", "severity", "department", "raised_by"),
+                "description": _("Main details about the issue, including severity, state, and assignment."),
             },
         ),
         (
-            _("Details"),
+            _("Status"),
+            {
+                "fields": ("is_unread", "is_archive"),
+                "description": _("Flags indicating whether the issue is unread or archived."),
+            },
+        ),
+        (
+            _("Timestamps"),
             {
                 "fields": ("created_at", "modified_at"),
-                "description": _(
-                    "Auto-generated timestamps indicating when the issue was created_at and last updated."
-                ),
+                "description": _("Timestamps indicating when the issue was created and last updated."),
             },
         ),
     )

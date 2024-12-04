@@ -153,6 +153,7 @@ dmypy.json
 
 # ruff
 .ruff_cache/
+media/*
 
 # Cython debug symbols
 cython_debug/
