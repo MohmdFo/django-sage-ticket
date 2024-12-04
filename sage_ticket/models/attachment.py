@@ -38,7 +38,7 @@ class Attachment(TimeStampMixin):
     class Meta:
         verbose_name = _("Attachment")
         verbose_name_plural = _("Attachments")
-        db_table = "sage_attachment"
+        db_table = "sage_ticket_attachment"
 
     def __repr__(self):
         return f"<Attachment(id={self.id}, name={self.name}"
