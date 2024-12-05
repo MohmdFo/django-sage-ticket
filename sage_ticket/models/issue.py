@@ -62,6 +62,12 @@ class Issue(TimeStampMixin):
         help_text=_("Indicates if the issue is archived."),
         db_comment="Indicates if the issue is archived.",
     )
+    is_public = models.BooleanField(
+        verbose_name=_("Is Public"),
+        default=False,
+        help_text=_("Indicates if the issue is public."),
+        db_comment="Indicates if the issue is public.",
+    )
 
     class Meta:
         verbose_name = _("Issue")

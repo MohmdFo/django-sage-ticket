@@ -28,13 +28,13 @@ class DepartmentInline(admin.TabularInline):
 @admin.register(Issue)
 class IssueAdmin(admin.ModelAdmin):
     inlines = [AttachmentInline, CommentInline]
-    list_display = ("subject", "state", "department", "raised_by", "is_unread", "is_archive", "created_at")
-    list_filter = ("state", "is_unread", "is_archive", "created_at", "department")
+    list_display = ("subject", "state", "department", "raised_by", "is_public", "is_unread", "is_archive", "created_at")
+    list_filter = ("state", "is_public", "is_unread", "is_archive", "created_at", "department")
     search_fields = ("subject", "message", "raised_by__username", "department__title")
     ordering = ("-created_at",)
     readonly_fields = ("created_at", "modified_at")
     autocomplete_fields = ("raised_by", "department")
-    save_on_top = True  # UX enhancement for admin users
+    save_on_top = True
 
     fieldsets = (
         (
@@ -47,8 +47,8 @@ class IssueAdmin(admin.ModelAdmin):
         (
             _("Status"),
             {
-                "fields": ("is_unread", "is_archive"),
-                "description": _("Flags indicating whether the issue is unread or archived."),
+                "fields": ("is_public", "is_unread", "is_archive"),
+                "description": _("Flags indicating whether the issue is public, unread, or archived."),
             },
         ),
         (
