@@ -14,7 +14,7 @@ class AttachmentInline(admin.TabularInline):
 class CommentInline(admin.TabularInline):
     model = Comment
     extra = 1
-    fields = ("title", "user", "message", "is_unread")
+    fields = ("title", "user", "message", "is_read")
     show_change_link = True
 
 
@@ -28,8 +28,8 @@ class DepartmentInline(admin.TabularInline):
 @admin.register(Issue)
 class IssueAdmin(admin.ModelAdmin):
     inlines = [AttachmentInline, CommentInline]
-    list_display = ("subject", "state", "department", "raised_by", "uid", "is_public", "is_unread", "is_archive", "created_at")
-    list_filter = ("state", "is_public", "is_unread", "is_archive", "created_at", "department")
+    list_display = ("subject", "state", "department", "raised_by", "uid", "is_public", "is_read", "is_archive", "created_at")
+    list_filter = ("state", "is_public", "is_read", "is_archive", "created_at", "department")
     search_fields = ("subject", "message", "raised_by__username", "department__title", "uid")
     ordering = ("-created_at",)
     readonly_fields = ("uid", "created_at", "modified_at")
@@ -47,7 +47,7 @@ class IssueAdmin(admin.ModelAdmin):
         (
             _("Status"),
             {
-                "fields": ("is_public", "is_unread", "is_archive"),
+                "fields": ("is_public", "is_read", "is_archive"),
                 "description": _("Flags indicating whether the issue is public, unread, or archived."),
             },
         ),

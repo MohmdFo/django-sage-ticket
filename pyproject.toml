@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "django_sage_ticket"
-version = "0.1.7"
+version = "0.1.9"
 description = "A Django-based ticketing system"
 authors = ["Radin Ghaheremani <radin@sageteam.org>","Sepehr Akbarzadeh <sepehr@sageteam.org>"]
 readme = "README.md"
@@ -17,6 +17,10 @@ django = [
 ]
 django-sage-tools = "^0.3.5"
 django-modeltranslation = "^0.19.11"
+django-import-export = "^4.3.3"
+django-ckeditor-5 = "^0.2.15"
+sorl-thumbnail = "^12.11.0"
+readtime = "^3.0.0"
 
 [tool.poetry.group.dev.dependencies]
 black = "^24.4.2"
