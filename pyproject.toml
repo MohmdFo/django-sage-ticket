@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "django_sage_ticket"
-version = "0.1.5"
+version = "0.1.6"
 description = "A Django-based ticketing system"
 authors = ["Radin Ghaheremani <radin@sageteam.org>","Sepehr Akbarzadeh <sepehr@sageteam.org>"]
 readme = "README.md"

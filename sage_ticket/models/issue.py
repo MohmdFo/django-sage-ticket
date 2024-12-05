@@ -1,3 +1,5 @@
+import uuid
+
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db import models
@@ -67,6 +69,14 @@ class Issue(TimeStampMixin):
         default=False,
         help_text=_("Indicates if the issue is public."),
         db_comment="Indicates if the issue is public.",
+    )
+    uid = models.UUIDField(
+        verbose_name=_("UID"),
+        default=uuid.uuid4,
+        unique=True,
+        editable=False,
+        help_text=_("A unique identifier for the issue."),
+        db_comment="A globally unique identifier for the issue.",
     )
 
     class Meta:
