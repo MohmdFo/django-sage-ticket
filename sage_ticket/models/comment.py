@@ -19,7 +19,7 @@ class Comment(TimeStampMixin):
         settings.AUTH_USER_MODEL,
         verbose_name=_("User"),
         on_delete=models.CASCADE,
-        related_name="comments",
+        related_name="issue_comments",
         help_text=_("The user who made the comment."),
         db_comment="The user who made the comment.",
     )
