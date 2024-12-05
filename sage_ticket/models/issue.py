@@ -1,3 +1,5 @@
+import uuid
+
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db import models
@@ -16,12 +18,6 @@ class Issue(TimeStampMixin):
         verbose_name=_("Subject"),
         help_text=_("The subject of the issue."),
         db_comment="The subject of the issue.",
-    )
-    name = models.CharField(
-        max_length=255,
-        verbose_name=_("Name"),
-        help_text=_("The name of the issue reporter."),
-        db_comment="The name of the issue reporter.",
     )
     message = models.TextField(
         verbose_name=_("Message"),
@@ -68,16 +64,25 @@ class Issue(TimeStampMixin):
         help_text=_("Indicates if the issue is archived."),
         db_comment="Indicates if the issue is archived.",
     )
+    is_public = models.BooleanField(
+        verbose_name=_("Is Public"),
+        default=False,
+        help_text=_("Indicates if the issue is public."),
+        db_comment="Indicates if the issue is public.",
+    )
+    uid = models.UUIDField(
+        verbose_name=_("UID"),
+        default=uuid.uuid4,
+        unique=True,
+        editable=False,
+        help_text=_("A unique identifier for the issue."),
+        db_comment="A globally unique identifier for the issue.",
+    )
 
     class Meta:
         verbose_name = _("Issue")
         verbose_name_plural = _("Issues")
-        db_table = "sage_issue"
-        constraints = [
-            models.CheckConstraint(
-                name="issue_state", check=models.Q(state__in=TicketStateEnum.values)
-            )
-        ]
+        db_table = "sage_ticket_issue"
 
     def clean(self):
         """Validate the issue's state transitions and ensure the state value is

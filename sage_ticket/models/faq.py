@@ -19,6 +19,7 @@ class FaqCategory(TitleSlugMixin, TimeStampMixin):
 
         verbose_name = _("FAQ Category")
         verbose_name_plural = _("FAQ Categories")
+        db_table = "sage_ticket_faq_cat"
 
     def __repr__(self):
         return f"<FAQ Category: {self.title}>"
@@ -60,11 +61,19 @@ class Faq(TimeStampMixin):
         db_comment="The category to which the faq belongs.",
     )
 
+    is_popular = models.BooleanField(
+        verbose_name=_("Is Popular"),
+        default=False,
+        help_text=_("Indicates if the FAQ is popular."),
+        db_comment="Flag indicating whether the FAQ is popular.",
+    )
+
     class Meta:
         """Meta Information"""
 
         verbose_name = _("FAQ")
         verbose_name_plural = _("FAQ")
+        db_table = "sage_ticket_faq"
         db_table_comment = "Table storing frequently asked questions and their answers for user reference."
 
     def __str__(self):

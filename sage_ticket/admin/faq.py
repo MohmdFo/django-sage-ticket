@@ -39,12 +39,12 @@ class FaqAdmin(TabbedTranslationAdmin):
     """
 
     admin_priority = 5
-    list_display = ("question", "category", "created_at", "modified_at")
-    list_filter = ("category", "created_at", "modified_at")
+    list_display = ("question", "category", "is_popular", "created_at", "modified_at")
+    list_filter = ("category", "is_popular", "created_at", "modified_at")
     search_fields = ("question", "answer", "category__title")
     list_select_related = ("category",)
     fieldsets = (
-        (None, {"fields": ("question", "answer", "category")}),
+        (None, {"fields": ("question", "answer", "category", "is_popular")}),
         (
             "Timestamps",
             {"fields": ("created_at", "modified_at"), "classes": ("collapse",)},
