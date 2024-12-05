@@ -61,6 +61,13 @@ class Faq(TimeStampMixin):
         db_comment="The category to which the faq belongs.",
     )
 
+    is_popular = models.BooleanField(
+        verbose_name=_("Is Popular"),
+        default=False,
+        help_text=_("Indicates if the FAQ is popular."),
+        db_comment="Flag indicating whether the FAQ is popular.",
+    )
+
     class Meta:
         """Meta Information"""
 
