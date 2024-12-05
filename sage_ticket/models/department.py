@@ -29,7 +29,7 @@ class Department(TimeStampMixin):
     class Meta:
         verbose_name = _("Department")
         verbose_name_plural = _("Departments")
-        db_table = "sage_department"
+        db_table = "sage_ticket_department"
 
     def __repr__(self):
         return f"<Department(id={self.id}, title={self.title})>"

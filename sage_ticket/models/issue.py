@@ -66,7 +66,7 @@ class Issue(TimeStampMixin):
     class Meta:
         verbose_name = _("Issue")
         verbose_name_plural = _("Issues")
-        db_table = "sage_issue"
+        db_table = "sage_ticket_issue"
 
     def clean(self):
         """Validate the issue's state transitions and ensure the state value is

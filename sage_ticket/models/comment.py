@@ -60,7 +60,7 @@ class Comment(TimeStampMixin):
     class Meta:
         verbose_name = _("Comment")
         verbose_name_plural = _("Comments")
-        db_table = "sage_comment"
+        db_table = "sage_ticket_comment"
 
     def __repr__(self):
         return f"<Comment(id={self.id}, title={self.title},user={self.user_id}"
