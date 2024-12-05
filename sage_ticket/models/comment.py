@@ -35,8 +35,8 @@ class Comment(TimeStampMixin):
         help_text=_("The content of the comment."),
         db_comment="The content of the comment.",
     )
-    is_unread = models.BooleanField(
-        verbose_name=_("Is Unread"),
+    is_read = models.BooleanField(
+        verbose_name=_("Is Read"),
         help_text=_("Indicates if the comment is unread."),
         db_comment="Indicates if the comment is unread.",
     )

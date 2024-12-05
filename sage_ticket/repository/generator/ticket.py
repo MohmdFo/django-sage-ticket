@@ -52,7 +52,7 @@ class TicketDataGenerator:
                 message=self.text.text(quantity=3),
                 title=self.text.title(),
                 status=random.choice(StatusEnum.choices)[0],
-                is_unread=True,
+                is_read=True,
             )
             for i in tqdm(range(total))
         ]

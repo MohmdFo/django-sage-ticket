@@ -1,1 +1,5 @@
 from .faq import FaqTranslationOptions
+from .category import TutorialCategoryTranslationOptions
+from .tutorial import TutorialTranslationOptions
+from .tag import TutorialTagTranslationOptions
+from .tutorial_faq import TutorialFaqTranslationOptions

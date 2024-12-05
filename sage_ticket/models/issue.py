@@ -52,8 +52,8 @@ class Issue(TimeStampMixin):
         help_text=_("The current state of the issue."),
         db_comment="The current state of the issue.",
     )
-    is_unread = models.BooleanField(
-        verbose_name=_("Is Unread"),
+    is_read = models.BooleanField(
+        verbose_name=_("Is Read"),
         default=False,
         help_text=_("Indicates if the issue is unread."),
         db_comment="Indicates if the issue is unread.",
@@ -83,26 +83,6 @@ class Issue(TimeStampMixin):
         verbose_name = _("Issue")
         verbose_name_plural = _("Issues")
         db_table = "sage_ticket_issue"
-
-    def clean(self):
-        """Validate the issue's state transitions and ensure the state value is
-        valid."""
-        super().clean()
-
-        if self.state not in TicketStateEnum.values:
-            raise ValidationError(_("Invalid state value"))
-
-        current_state = None
-        if self.pk is not None:  # check if data is being updated
-            current_state = Issue.objects.get(pk=self.pk).state
-
-        valid_states = Issue.get_valid_states()
-        if current_state is not None and self.state not in valid_states.get(
-            current_state, []
-        ):
-            raise ValidationError(
-                _(f"Invalid state transition from {current_state} to {self.state}")
-            )
 
     @staticmethod
     def get_valid_states():

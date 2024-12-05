@@ -3,6 +3,10 @@ from .comment import Comment
 from .department import Department
 from .issue import Issue
 from .faq import Faq, FaqCategory
+from .tutorial import Tutorial
+from .tutorial_faq import TutorialFaq
+from .category import TutorialCategory
+from .tag import TutorialTag
 
 __all__ = [
     "Attachment",
@@ -11,4 +15,8 @@ __all__ = [
     "Department",
     "Faq",
     "FaqCategory",
+    "Tutorial",
+    "TutorialFaq",
+    "TutorialCategory",
+    "TutorialTag",
 ]
