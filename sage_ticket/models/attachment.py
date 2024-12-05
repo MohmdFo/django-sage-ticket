@@ -17,6 +17,7 @@ class Attachment(TimeStampMixin):
     issue = models.ForeignKey(
         "Issue",
         on_delete=models.CASCADE,
+        related_name="attachments",
         verbose_name=_("Issue"),
         help_text=_("The issue to which this attachment is related."),
         db_comment="The issue to which this attachment is related.",

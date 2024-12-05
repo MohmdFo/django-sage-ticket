@@ -35,6 +35,7 @@ class Issue(TimeStampMixin):
         settings.AUTH_USER_MODEL,
         verbose_name=_("Raised by"),
         on_delete=models.CASCADE,
+        related_name="issues",
         help_text=_("The user who raised the issue."),
         db_comment="The user who raised the issue.",
     )
@@ -42,6 +43,7 @@ class Issue(TimeStampMixin):
         "Department",
         verbose_name=_("Department"),
         on_delete=models.CASCADE,
+        related_name="issues",
         help_text=_("The department to which the issue is assigned."),
         db_comment="The department to which the issue is assigned.",
     )

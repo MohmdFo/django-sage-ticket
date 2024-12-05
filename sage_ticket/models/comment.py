@@ -19,6 +19,7 @@ class Comment(TimeStampMixin):
         settings.AUTH_USER_MODEL,
         verbose_name=_("User"),
         on_delete=models.CASCADE,
+        related_name="comments",
         help_text=_("The user who made the comment."),
         db_comment="The user who made the comment.",
     )
@@ -26,6 +27,7 @@ class Comment(TimeStampMixin):
         "Issue",
         verbose_name=_("Issue"),
         on_delete=models.CASCADE,
+        related_name="comments",
         help_text=_("The issue to which this comment is related."),
         db_comment="The issue to which this comment is related.",
     )
@@ -51,6 +53,7 @@ class Comment(TimeStampMixin):
         "self",
         verbose_name=_("Replay"),
         on_delete=models.CASCADE,
+        related_name="children",
         null=True,
         blank=True,
         help_text=_("The comment to which this is a reply."),
