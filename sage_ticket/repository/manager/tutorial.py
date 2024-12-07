@@ -1,9 +1,9 @@
-from django.db.models import Manager
+from polymorphic.managers import PolymorphicManager
 
 from ..queryset.tutorial import TutorialQuerySet
 
 
-class TutorialDataAccessLayer(Manager):
+class TutorialDataAccessLayer(PolymorphicManager):
     """
     Tutorial Data Access Layer
     """

@@ -19,8 +19,10 @@ from django.db.models import (
 from django.db.models.functions import Now
 from django.utils import timezone
 
+from polymorphic.query import PolymorphicQuerySet
 
-class TutorialQuerySet(QuerySet):
+
+class TutorialQuerySet(PolymorphicQuerySet):
     """
     A custom QuerySet class for the Tutorial model, providing additional methods for
     querying blog tutorials.

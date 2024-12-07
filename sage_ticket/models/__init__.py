@@ -3,7 +3,7 @@ from .comment import Comment
 from .department import Department
 from .issue import Issue
 from .faq import Faq, FaqCategory
-from .tutorial import Tutorial
+from .tutorial import Tutorial, PictureTutorial, VideoTutorial
 from .tutorial_faq import TutorialFaq
 from .category import TutorialCategory
 from .tag import TutorialTag
@@ -19,4 +19,6 @@ __all__ = [
     "TutorialFaq",
     "TutorialCategory",
     "TutorialTag",
+    "PictureTutorial",
+    "VideoTutorial",
 ]

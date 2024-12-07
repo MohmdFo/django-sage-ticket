@@ -4,8 +4,9 @@ from django.utils.translation import gettext_lazy as _
 from sorl.thumbnail.admin import AdminImageMixin
 from import_export.admin import ImportExportModelAdmin
 from modeltranslation.admin import TabbedTranslationAdmin, TranslationTabularInline
+from polymorphic.admin import PolymorphicParentModelAdmin, PolymorphicChildModelAdmin
 
-from sage_ticket.models import Tutorial, TutorialFaq
+from sage_ticket.models import Tutorial, TutorialFaq, VideoTutorial, PictureTutorial
 from sage_ticket.resources import TutorialResource
 
 
@@ -15,7 +16,12 @@ class TutorialFaqInline(TranslationTabularInline):
 
 
 @admin.register(Tutorial)
-class TutorialAdmin(ImportExportModelAdmin, TabbedTranslationAdmin, AdminImageMixin):
+class TutorialAdmin(
+    PolymorphicParentModelAdmin,
+    ImportExportModelAdmin,
+    TabbedTranslationAdmin,
+    AdminImageMixin
+    ):
     """
     Django admin customization for the Tutorial model.
 
@@ -25,6 +31,12 @@ class TutorialAdmin(ImportExportModelAdmin, TabbedTranslationAdmin, AdminImageMi
     """
 
     resource_class = TutorialResource
+    base_model = Tutorial
+    show_in_index = True
+    child_models = (
+        PictureTutorial,
+        VideoTutorial
+    )
 
     admin_priority = 2
     inlines = (TutorialFaqInline,)
@@ -77,33 +89,6 @@ class TutorialAdmin(ImportExportModelAdmin, TabbedTranslationAdmin, AdminImageMi
             },
         ),
         (
-            "SEO Metadata",
-            {
-                "fields": (
-                    "keywords",
-                    "meta_description",
-                    "json_ld",
-                ),
-                "classes": ("collapse",),
-            },
-        ),
-        (
-            "Open Graph Metadata",
-            {
-                "fields": (
-                    "og_title",
-                    "og_type",
-                    "og_image",
-                    "og_description",
-                    "og_url",
-                    "og_site_name",
-                    "og_locale",
-                    "article_author",
-                ),
-                "classes": ("collapse",),
-            },
-        ),
-        (
             _("Tags & Relationships"),
             {
                 "fields": (
@@ -146,3 +131,123 @@ class TutorialAdmin(ImportExportModelAdmin, TabbedTranslationAdmin, AdminImageMi
         queryset = super().get_queryset(request)
         queryset = queryset.prefetch_related("tags")
         return queryset
+
+
+@admin.register(PictureTutorial)
+class PictureTutorialAdmin(PolymorphicChildModelAdmin):
+    """
+    Django admin customization for the Tutorial model.
+
+    This admin class customizes the display, search, and filter capabilities for Tutorials
+    in the Django admin interface. It also provides a customized form layout for
+    editing and adding new Tutorials.
+    """
+    base_model = PictureTutorial
+    show_in_index = True
+    readonly_fields = ("created_at", "modified_at", "slug")
+
+    fieldsets = (
+        (
+            "Basic Information",
+            {"fields": ("title", "slug", "category", "is_published")},
+        ),
+        (
+            "Content Details",
+            {
+                "fields": (
+                    "author",
+                    "summary",
+                    "description",
+                    "picture",
+                    "banner",
+                    "alternate_text",
+                )
+            },
+        ),
+        (
+            _("Tags & Relationships"),
+            {
+                "fields": (
+                    "tags",
+                    "suggested_tutorials",
+                    "related_tutorials",
+                ),
+                "classes": ("collapse",),
+                "description": _(
+                    "Enhance the tutorial's visibility by adding tags and "
+                    "linking related tutorials."
+                ),
+            },
+        ),
+        (
+            "Timestamps",
+            {
+                "fields": (
+                    "published_at",
+                    "modified_at",
+                    "created_at",
+                ),
+                "classes": ("collapse",),
+            },
+        ),
+    )
+
+
+@admin.register(VideoTutorial)
+class VideoTutorialAdmin(PolymorphicChildModelAdmin):
+    """
+    Django admin customization for the Tutorial model.
+
+    This admin class customizes the display, search, and filter capabilities for Tutorials
+    in the Django admin interface. It also provides a customized form layout for
+    editing and adding new Tutorials.
+    """
+    base_model = VideoTutorial
+    show_in_index = True
+    readonly_fields = ("created_at", "modified_at", "slug")
+
+    fieldsets = (
+        (
+            "Basic Information",
+            {"fields": ("title", "slug", "category", "is_published")},
+        ),
+        (
+            "Content Details",
+            {
+                "fields": (
+                    "author",
+                    "summary",
+                    "description",
+                    "video",
+                    "thumbnail",
+                    "alternate_text",
+                )
+            },
+        ),
+        (
+            _("Tags & Relationships"),
+            {
+                "fields": (
+                    "tags",
+                    "suggested_tutorials",
+                    "related_tutorials",
+                ),
+                "classes": ("collapse",),
+                "description": _(
+                    "Enhance the tutorial's visibility by adding tags and "
+                    "linking related tutorials."
+                ),
+            },
+        ),
+        (
+            "Timestamps",
+            {
+                "fields": (
+                    "published_at",
+                    "modified_at",
+                    "created_at",
+                ),
+                "classes": ("collapse",),
+            },
+        ),
+    )
