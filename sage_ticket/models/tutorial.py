@@ -16,6 +16,7 @@ try:
     import readtime
 except ImportError:
     raise ImportError("Install `readtime` package. Run `pip install readtime` ")
+from polymorphic.models import PolymorphicModel
 
 from sage_tools.mixins.models.abstract import PictureOperationAbstract
 from sage_tools.mixins.models.base import TimeStampMixin, TitleSlugDescriptionMixin
@@ -24,8 +25,8 @@ from sage_ticket.repository.manager import TutorialDataAccessLayer
 
 
 class Tutorial(
+    PolymorphicModel,
     TitleSlugDescriptionMixin,
-    PictureOperationAbstract,
     TimeStampMixin,
 ):
     """
@@ -58,28 +59,6 @@ class Tutorial(
         blank=False,
         help_text=_("Enter a brief summary of the tutorial, up to 140 characters."),
         db_comment="A brief summary of the blog tutorial.",
-    )
-
-    picture = ImageField(
-        _("Picture of Tutorial"),
-        upload_to="blog/tutorials/pictures/",
-        width_field="width_field",
-        height_field="height_field",
-        help_text=_(
-            "Upload an image representing the tutorial. Ideal dimensions are [x] by [y]."
-        ),
-        db_comment="Image file associated with the blog tutorial.",
-    )
-
-    banner = ImageField(
-        _("Banner of Tutorial Detail"),
-        upload_to="blog/tutorials/banners/",
-        null=True,
-        blank=True,
-        help_text=_(
-            "Upload an image representing the tutorial. Ideal dimensions are [x] by [y]."
-        ),
-        db_comment="Image file associated with the blog tutorial.",
     )
 
     published_at = models.DateTimeField(
@@ -172,3 +151,56 @@ class Tutorial(
         printed or logged, especially during debugging.
         """
         return f"<Tutorial: {self.title}>"
+
+class PictureTutorial(Tutorial, PictureOperationAbstract):
+    """
+    Tutorial with picture and banner fields.
+    """
+    picture = ImageField(
+        _("Picture of Tutorial"),
+        upload_to="tutorials/pictures/",
+        null=True,
+        blank=True,
+        help_text=_("Upload an image representing the tutorial."),
+        db_comment="Image file associated with the tutorial.",
+    )
+    banner = ImageField(
+        _("Banner of Tutorial"),
+        upload_to="tutorials/banners/",
+        null=True,
+        blank=True,
+        help_text=_("Upload a banner image for the tutorial."),
+        db_comment="Banner image file associated with the tutorial.",
+    )
+
+    class Meta:
+        verbose_name = _("Picture Tutorial")
+        verbose_name_plural = _("Picture Tutorials")
+        db_table = "picture_tutorial"
+        db_table_comment = "Table for tutorials with pictures and banners."
+
+
+class VideoTutorial(Tutorial, PictureOperationAbstract):
+    """
+    Tutorial with a video field.
+    """
+    video = models.FileField(
+        _("Video File"),
+        upload_to="tutorials/videos/",
+        help_text=_("Upload the video file for the tutorial."),
+        db_comment="File of the video associated with the tutorial.",
+    )
+    thumbnail = ImageField(
+        _("Thumbnail of Tutorial"),
+        upload_to="tutorials/pictures/",
+        null=True,
+        blank=True,
+        help_text=_("Upload an image representing thumbnail of the tutorial."),
+        db_comment="Image file associated with the tutorial.",
+    )
+
+    class Meta:
+        verbose_name = _("Video Tutorial")
+        verbose_name_plural = _("Video Tutorials")
+        db_table = "video_tutorial"
+        db_table_comment = "Table for tutorials with video files."

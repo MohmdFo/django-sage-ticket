@@ -12,4 +12,4 @@ class TutorialTranslationOptions(TranslationOptions):
     Tutorial Category Translation Option
     """
 
-    fields = ("title", "description", "summary", "alternate_text")
+    fields = ("title", "description", "summary")
